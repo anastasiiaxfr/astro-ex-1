@@ -27,6 +27,8 @@
 			+theme(white)
 			svg
 				color: $main
+				[data-bs-theme="light"] &
+					color: $white
 		h3
 			@extend .h4
 			margin: 0
@@ -34,6 +36,8 @@
 			+theme(dark)
 			&:hover
 				+theme(main)
+			
+					
 
 	&__body
 		width: 100%

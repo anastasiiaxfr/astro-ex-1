@@ -1,12 +1,14 @@
 ---
 import Corner from './_corner.astro';
+import { Image } from 'astro:assets';
+
 const { data } = Astro.props;
 const { thumbnail, title, desc, goal, result, slug } = data.frontmatter;
 ---
 
 <article class="case">
 	<a class="case__img" href={`/cases/${slug}`}>
-		<img src={thumbnail} alt={title} width="600" height="300" />
+		<Image src={thumbnail} alt={title} width="600" height="300" />
 	</a>
 	<div class="case__body">
 		<Corner url={`/cases/${slug}`} />
