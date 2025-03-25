@@ -19,9 +19,9 @@ const faqSchema = {
 	{
 		data.map(({ qw, answ }) => (
 			<div class="faq">
-				<button class="faq__toggle">
+				<div class="faq__toggle">
 					<h3>{qw}</h3>
-				</button>
+				</div>
 				<div class="faq__body" set:html={answ} />
 			</div>
 		))

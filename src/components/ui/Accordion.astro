@@ -5,13 +5,13 @@ const { data } = Astro.props;
 <nav class="accordion">
 	{
 		data.map(({ title, content }, index) => (
-			<div class="accordion__item" key={index}>
-				<button class="accordion__toggle">
+			<div class="accordion__item">
+				<div class="accordion__toggle">
 					<h3>{title}</h3>
 					<svg class="icon" width="24" height="24">
 						<use xlink:href="#arr-btm" />
 					</svg>
-				</button>
+				</div>
 				<div
 					class="accordion__body"
 					id={`body-${index}`}

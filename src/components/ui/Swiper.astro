@@ -19,8 +19,8 @@ const {
 >
 	<div class="swiper-wrapper">
 		{
-			data.map((item, index) => (
-				<div class="swiper-slide" key={index}>
+			data.map((item) => (
+				<div class="swiper-slide">
 					<CardComponent data={item} count={count} type={type} />
 				</div>
 			))

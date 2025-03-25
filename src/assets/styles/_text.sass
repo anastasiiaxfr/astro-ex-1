@@ -196,9 +196,14 @@ div
         grid-template-columns: 1fr
 
 
-hgroup
+.hgroup
     +flex(flex, center, space-between, wrap)
+    align-self: start
     gap: $gap2
     margin-bottom: $gap4
     h2
         margin: 0
+    +maw($xs)
+        button, a
+            width: 100%
+

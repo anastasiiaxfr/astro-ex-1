@@ -43,7 +43,6 @@
 		+theme(black)
 		grid-column: 2
 		flex-direction: column
-		padding: 1em 0
 		display: none
 		overflow: hidden
 		overflow-y: auto
@@ -56,7 +55,6 @@
 			grid-column: 1
 			grid-row: initial !important
 		
-	
 	&-item-toggle
 		+flex(flex, center, start, nowrap)
 		gap: $gap2
@@ -73,9 +71,7 @@
 		transition: $trs
 		text-align: left
 		&:hover
-			color: $main
-			border: 1px solid rgba($white, 0.1)
-			border-width: 1px 0 0
+			+theme(white)
 		&:first-child
 			border: 0
 	&__cta

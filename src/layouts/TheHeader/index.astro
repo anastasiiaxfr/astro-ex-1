@@ -23,7 +23,7 @@ const customTransition = {
 };
 ---
 
-<header class="header sticky-top t-0" transition:animate={customTransition}>
+<header class="header sticky-top" transition:animate={customTransition}>
 	<div class="container">
 		<Logo />
 
@@ -31,13 +31,11 @@ const customTransition = {
 			{
 				nav.map((item) =>
 					item.child ? (
-						<div class="dropdown">
+						<div class="header-dropdown">
 							<a
-								class="dropdown-toggle"
+								class="header-dropdown-toggle"
 								href={item.url}
 								role="button"
-								data-bs-toggle="dropdown"
-								aria-expanded="false"
 							>
 								{item.title}
 								<svg class="icon" width="16" height="16">
@@ -45,23 +43,41 @@ const customTransition = {
 								</svg>
 							</a>
 
-							<ul class="dropdown-menu">
-								{item.child.map((child) => (
-									<li>
-										<a
-											class="dropdown-item"
-											href={child.url}
-										>
-											{child.title}
-										</a>
-									</li>
-								))}
-							</ul>
+							{item.child && (
+								<nav class="header-dropdown-menu">
+									<div class="container">
+										<ul>
+											{item.child.map((child) => (
+												<li>
+													<a href={child.url}>
+														{child.title}
+													</a>
+													{child.child && (
+														<nav>
+															{child.child.map(
+																(i) => (
+																	<a
+																		href={
+																			i.url
+																		}
+																	>
+																		{
+																			i.title
+																		}
+																	</a>
+																)
+															)}
+														</nav>
+													)}
+												</li>
+											))}
+										</ul>
+									</div>
+								</nav>
+							)}
 						</div>
 					) : (
-						<a href={item.url} class="menu-item">
-							{item.title}
-						</a>
+						<a href={item.url}>{item.title}</a>
 					)
 				)
 			}
@@ -98,40 +114,32 @@ const customTransition = {
 		{
 			nav.map((item, ind) =>
 				item.child ? (
-					<div class="accordion">
-						<div class="accordion-item">
-							<div class="accordion-header">
-								<button
-									class="accordion-button"
-									type="button"
-									data-bs-toggle="collapse"
-									data-bs-target={`#collapse-${ind}`}
-									aria-expanded="false"
-								>
-									{item.title}
-									<svg class="icon" width="16" height="16">
-										<use xlink:href="#arr-top" />
-									</svg>
-								</button>
-							</div>
-							<div
-								id={`collapse-${ind}`}
-								class="accordion-collapse collapse"
+					<div class="drawer-accordion">
+						<div class="drawer-accordion-item">
+							<a
+								href={item.url}
+								class="drawer-accordion-button"
+								role="button"
+								data-target={`#collapse-${ind}`}
 							>
-								<div class="accordion-body">
-									<nav>
-										{item.child.map((i) => (
-											<a href={i.url}>{i.title}</a>
-										))}
-									</nav>
-								</div>
-							</div>
+								{item.title}
+								<svg class="icon" width="16" height="16">
+									<use xlink:href="#arr-top" />
+								</svg>
+							</a>
+
+							<nav
+								id={`collapse-${ind}`}
+								class="drawer-accordion-body"
+							>
+								{item.child.map((i) => (
+									<a href={i.url}>{i.title}</a>
+								))}
+							</nav>
 						</div>
 					</div>
 				) : (
-					<a href={item.url} class="menu-item">
-						{item.title}
-					</a>
+					<a href={item.url}>{item.title}</a>
 				)
 			)
 		}
@@ -142,18 +150,18 @@ const customTransition = {
 	document.addEventListener('astro:page-load', () => {
 		const drawerToggleBtns = document.querySelectorAll('.drawer__toggle');
 		const drawer = document.querySelector('.drawer');
-		const drawerMenu = document.querySelector('.drawer__menu');
+
+		const drawerDdBody = document.querySelectorAll(
+			'.drawer-accordion-body'
+		);
+
+		const drawerDdToggle = document.querySelectorAll(
+			'.drawer-accordion-button'
+		);
 
 		drawerToggleBtns.forEach((button) => {
 			button.addEventListener('click', () => {
 				drawer.classList.toggle('show');
-			});
-		});
-
-		const drawerLinks = drawerMenu.querySelectorAll('a');
-		drawerLinks.forEach((link) => {
-			link.addEventListener('click', () => {
-				drawer.classList.remove('show');
 			});
 		});
 
@@ -163,6 +171,76 @@ const customTransition = {
 				!e.target.closest('.drawer__toggle')
 			) {
 				drawer.classList.remove('show');
+				drawerDdBody.forEach((i) => {
+					i.classList.remove('show');
+				});
+				drawerDdToggle.forEach((i) => {
+					i.classList.remove('show');
+				});
+			}
+		});
+
+		const accordionButtons = document.querySelectorAll(
+			'.drawer-accordion-button'
+		);
+		accordionButtons.forEach((button) => {
+			button.addEventListener('click', function (e) {
+				e.preventDefault();
+				e.stopPropagation();
+
+				this.classList.toggle('show');
+
+				const accordionBody = button
+					.closest('.drawer-accordion-item')
+					.querySelector('.drawer-accordion-body');
+
+				accordionBody.classList.toggle('show');
+
+				drawerDdBody.forEach((body) => {
+					if (body !== accordionBody) {
+						body.classList.remove('show');
+					}
+				});
+
+				drawerDdToggle.forEach((btn) => {
+					if (btn !== button) {
+						btn.classList.remove('show');
+					}
+				});
+			});
+		});
+
+		// New script for handling dropdown menus in header
+		const header = document.querySelector('header');
+		const dropdownToggles = document.querySelectorAll(
+			'.header-dropdown-toggle'
+		);
+		const openDropdowns = document.querySelectorAll(
+			'.header-dropdown-menu'
+		);
+		dropdownToggles.forEach((toggle) => {
+			toggle.addEventListener('click', (e) => {
+				e.stopPropagation();
+				e.preventDefault();
+				header.classList.toggle('show');
+				toggle.classList.toggle('show');
+				const parentDropdown = e.target.closest('.header-dropdown');
+				const dropdownMenu = parentDropdown.querySelector(
+					'.header-dropdown-menu'
+				);
+				dropdownMenu.classList.toggle('show');
+			});
+		});
+
+		document.addEventListener('click', (e) => {
+			if (!e.target.closest('.header-dropdown')) {
+				header.classList.remove('show');
+				dropdownToggles.forEach((i) => {
+					i.classList.remove('show');
+				});
+				openDropdowns.forEach((i) => {
+					i.classList.remove('show');
+				});
 			}
 		});
 	});

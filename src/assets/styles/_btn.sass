@@ -65,6 +65,11 @@
 		@extend .btn
 		background: $dark
 		color: $white
+		[data-bs-theme="light"] &
+			background: none
+			color: $main
+			&:hover, &:focus, &:active
+				+theme(main)
 	&-top
 		@extend .btn-squire
 		opacity: 0
@@ -245,12 +250,9 @@
 	opacity: $op
 	transition: $trs
 	cursor: pointer
-	&:hover, &:active, &:focus
+	&:hover, &:active, &:focus, &.active
 		opacity: 1
 		border-color: $main
-	&.active
-		+theme(main)
-		opacity: 1
 	&-default
 		@extend .tag
 		opacity: 1

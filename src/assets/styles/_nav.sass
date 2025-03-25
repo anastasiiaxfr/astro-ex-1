@@ -2,7 +2,7 @@
 	img
 		width: auto 
 
-
+$menuHide: 1300
 .header
 	+ps(sticky, (t, 0), (l, 0))
 	z-index: 100500
@@ -12,6 +12,10 @@
 	backdrop-filter: blur(10px)
 	[data-bs-theme="light"] &
 		+theme(dark)
+	&.show
+		+miw($menuHide)
+			+theme(dark)
+			border-bottom: 1px solid $main
 	.container
 		+flex(flex, center, space-between, nowrap)
 		gap: $gap2
@@ -23,24 +27,17 @@
 			letter-spacing: 0.02em
 			&:hover
 				color: $main
-		.dropdown-toggle
+	&-dropdown-toggle
+		+flex(flex, center, start, nowrap)
+		gap: $gap1
+		svg
+			transform: rotate(180deg)
+		&::after
+			display: none
+		&.show
 			svg
-				transform: rotate(180deg)
-			&::after
-				display: none
-			&.show
-				svg
-					transform: none
-		.dropdown-menu
-			+theme(dark)
-			border: $bd
-			border-radius: $brs1
-			a
-				color: $white
-				&:hover
-					background: none
-					color: $main
-	+maw($lg)
+				transform: none
+	+maw($menuHide)
 		&__menu
 			display: none
 	+maw($sm)
@@ -60,33 +57,36 @@
 	padding: $gap3
 	transform: translateX(100%)
 	opacity: 0
-	transition: transform 0.3s linear
+	transition: transform 0.2s linear
 	&.show
 		transform: none
 		opacity: 1
-	.accordion
+	&-accordion
+		&-button
+			svg
+				transform: rotate(180deg)
+			&.show
+				svg
+					transform: none
 		&-item
 			background: none
 			border: none
 			color: inherit
-		&-button
-			+flex(flex, center, space-between, nowrap)
-			gap: $gap1
-			background: none
-			color: inherit
-			padding: 0
-			box-shadow: none
-			cursor: pointer
-			svg
-				transform: rotate(180deg)
-			&::after
-				display: none
-			&[aria-expanded="true"]
-				svg
-					transform: rotate(0deg)
+				
 		&-body
-			a
+			margin-top: 4px
+			padding-left: 1em
+			display: none
+			&.show
 				display: block
+			a
+				justify-content: start
+				margin: $gap1 0
+				+ft(14, 14*1.4, 400)
+				opacity: $op
+				&:hiver
+					opacity: 1
+	
 	&__header
 		+flex(flex, center, space-between, nowrap)
 		gap: $gap1
@@ -108,9 +108,12 @@
 		color: inherit
 		cursor: pointer
 	a
+		+flex(flex, center, space-between, nowrap)
+		gap: $gap1
+		transition: color 0.25s ease-in-out
 		&:hover
 			color: $main
-	+miw($lg)
+	+miw($menuHide)
 		display: none
 		&__toggle
 			display: none
@@ -220,7 +223,6 @@
 		flex-direction: column
 		gap: $gap2
 		align-items: center
-
 	&-post
 		.container
 			align-items: start
@@ -240,7 +242,8 @@
 			right: 0
 			z-index: 0
 			max-width: 100%
-			height: 100%
+			max-height: 100%
+			height: auto
 			width: auto
 	&__content
 		max-width: 750px
@@ -303,4 +306,48 @@
 			img
 				transform: none
 			
-	
+.header-dropdown
+	&-menu
+		position: absolute
+		left: 0
+		top: 83px
+		width: 100%
+		padding: 1em
+		+theme(dark)
+		transform: translateY(0px)
+		opacity: 0
+		z-index: -1000
+		height: 0
+		visibility: hidden
+		transition: all 0.25s linear
+		&.show
+			opacity: 1
+			height: auto
+			visibility: visible
+			transform: none
+			z-index: 100500
+		ul
+			width: 100%
+			list-style-type: none
+			padding: 0
+			display: grid
+			grid-template-columns: repeat(4, auto)
+			gap: $gap3
+			align-items: start
+			li
+				display: grid
+				align-items: start
+				
+			li > a
+				@extend .h6
+				margin-top: 0
+			li > nav
+				margin-top: $gap2
+				a
+					+flex(flex, center, start, nowrap)
+					gap: $gap2
+					margin: 10px 0
+					opacity: $op
+					+ft(14, 14, 400)
+					&:hover
+						opacity: 1
