@@ -43,6 +43,7 @@ const categoryTitle = currentCategory ? currentCategory.title : 'Unknown';
 			<Tags
 				data={[{ title: 'All', slug: 'all' }, ...allTags]}
 				uri="/services/"
+				active={category}
 			/>
 		</div>
 	</section>

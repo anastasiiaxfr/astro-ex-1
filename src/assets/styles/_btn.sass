@@ -248,6 +248,9 @@
 	&:hover, &:active, &:focus
 		opacity: 1
 		border-color: $main
+	&.active
+		+theme(main)
+		opacity: 1
 	&-default
 		@extend .tag
 		opacity: 1

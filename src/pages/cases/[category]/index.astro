@@ -7,7 +7,6 @@ import Card from '../../../components/cards/_case-card.astro';
 import Button from '../../../components/ui/Forms/Button.astro';
 
 import PaginationStatic from '../../../components/ui/PaginationStatic.astro';
-import { formDataToObject } from 'astro:actions';
 const { category } = Astro.params;
 
 export async function getStaticPaths() {
@@ -47,6 +46,7 @@ const seo = {
 			<Tags
 				data={[{ title: 'All', slug: 'all' }, ...allTags]}
 				uri={`/${uri}/`}
+				active={category}
 			/>
 		</div>
 	</section>
