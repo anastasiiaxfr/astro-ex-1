@@ -16,25 +16,31 @@
 	&__cat
 		padding: 2em
 		border-radius: $brs2
-		+theme(dark2)
+		+theme(black)
 		border: none
-		display: grid
-		align-items: center
+		+flex(flex, center, space-between, nowrap)
+		gap: $gap2
 		cursor: pointer
 		text-align: left
 		grid-column: 1
 		[data-bs-theme="light"] &
 			+theme(dark)
+		svg
+			opacity: 0
 		h3
 			@extend .h4
 			margin: 0
 		&:hover, &.active
-			color: $main
+			+theme(white)
+			svg
+				opacity: 1
+			[data-bs-theme="light"] &
+				+theme(main)
 		+maw($xsm)
 			font-size: 17px
 	&__body
 		border-radius: 2em
-		+theme(dark2)
+		+theme(black)
 		grid-column: 2
 		flex-direction: column
 		padding: 1em 0
@@ -112,7 +118,7 @@
 		position: relative
 		padding: 2em
 		min-height: 200px
-		+theme(dark2)
+		+theme(black)
 		border-radius: $brs2
 		overflow: hidden
 		[data-bs-theme="light"] &

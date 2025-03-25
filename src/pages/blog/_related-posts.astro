@@ -17,7 +17,11 @@ const countRelatedPosts = 6;
 	<div class="container">
 		<hgroup>
 			<h2>{title}</h2>
-			{btn && <Button title={btn.title} url={btn.url} />}
+			{
+				btn && (
+					<Button title={btn.title} url={btn.url} style={btn.style} />
+				)
+			}
 		</hgroup>
 
 		<Slider

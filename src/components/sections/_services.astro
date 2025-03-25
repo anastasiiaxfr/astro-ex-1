@@ -36,6 +36,9 @@ const data = Object.entries(servicesByCategory)
 						([category, services], ind) => (
 							<button class="feature__cat" data-index={ind}>
 								<h3 class="my-0">{getCatTitle(category)}</h3>
+								<svg class="icon" width="24" height="24">
+								<use xlink:href="#arr-rt"></use>
+								</svg>
 							</button>
 						
 							<div

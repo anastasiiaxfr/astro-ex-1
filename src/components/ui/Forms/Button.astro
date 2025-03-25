@@ -1,8 +1,8 @@
 ---
-const { title = 'Напишите нам', url = '#' } = Astro.props;
+const { title = 'Напишите нам', url = '#', style = 'bg' } = Astro.props;
 ---
 
-<a href={url} class="btn">
+<a href={url} class={style === 'bd' ? 'btn-secondary' : 'btn'}>
 	{title}
 	<svg class="icon" width="24" height="24">
 		<use xlink:href="#arr-t-r"></use>
